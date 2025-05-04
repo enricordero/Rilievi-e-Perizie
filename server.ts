@@ -53,28 +53,32 @@ app.use('/', (req, res, next) => {
 
 // 5. CORS
 const whitelist = [
-  'http://rilievi-e-perizie-un3o.onrender.com/',
-  'https://rilievi-e-perizie-un3o.onrender.com/',
+  'http://my-crud-server.herokuapp.com',
+  'https://my-crud-server.herokuapp.com',
   'http://localhost:3000',
   'https://localhost:3001',
   'http://localhost:4200',
-  'http://localhost:8100',
-  'https://cordovaapp'
-
+  'https://cordovaapp',
+  'https://rilievi-e-perizie-un3o.onrender.com'
 ];
+
 const corsOptions: CorsOptions = {
   origin: function (origin, callback) {
-    if (!origin)
-      // browser direct call
+    if (!origin) {
       return callback(null, true);
-    if (whitelist.indexOf(origin) === -1) {
-      var msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-      return callback(new Error(msg), false);
-    } else return callback(null, true);
-  },
-  credentials: true
+    }
+    const trimmedOrigin = origin.trim();
+    console.log("Request from origin:", trimmedOrigin);
+    if (whitelist.includes(trimmedOrigin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS: " + trimmedOrigin));
+    }
+  }
 };
-app.use('/', cors(corsOptions));
+
+app.use(cors(corsOptions));
+
 
 /* ********************** Client routes ********************** */
 app.post('/api/login', async (req: Request, res: Response) => {
