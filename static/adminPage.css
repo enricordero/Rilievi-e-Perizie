@@ -1,0 +1,147 @@
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #f0f2f5;
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+header {
+  width: 100%;
+  background-color: #003366;
+  color: white;
+  padding: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+}
+
+header h1 {
+  margin: 0;
+  flex: 2;
+}
+
+#logoutBtn {
+  background: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  flex: 1;
+}
+
+#btnSalvaModifiche, #btnCreaUtente {
+  background: #40be39;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.controls {
+  background-color: white;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+#mapContainer {
+  width: 100%;
+  height: 60vh;
+}
+
+.info,
+.creaUtente {
+  background-color: white;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.info {
+  flex: 2;
+  width: 48%;
+}
+
+.creaUtente {
+  flex: 1;
+  width: 48%;
+  text-align: center;
+  height: 100%;
+}
+
+h2 {
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+#dettagliPerizia,
+#indirizzo,
+#dataOra,
+#descrizionePerizia,
+#fotoContainer,
+.commentoFoto  {
+  width: 95%;
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  font-family: 'Arial', sans-serif;
+  white-space: pre-wrap;
+}
+
+#descrizionePerizia {
+  min-height: 100px;
+  resize: vertical;
+}
+
+#fotoContainer {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+#fotoContainer img {
+  max-width: 200px;
+  height: auto;
+  border-radius: 5px;
+}
+
+#btnSalvaModifiche {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+#btnSalvaModifiche:hover {
+  background-color: #0056b3;
+}
+
+.btnMarker{
+  width: 100%;
+  padding: 0.8rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+}

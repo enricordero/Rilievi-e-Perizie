@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin - Rilievi e Perizie</title>
+  <link rel="stylesheet" href="adminPage.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <!-- Per la mappa -->
+  <link href="https://unpkg.com/maplibre-gl@^5.0.0/dist/maplibre-gl.css" rel="stylesheet" />
+  <script src="https://unpkg.com/maplibre-gl@^5.0.0/dist/maplibre-gl.js"></script>
+  <!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Script JS -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="adminPage.js"></script>
+  <script src="mappa.js"></script>
+  <script src="libreria.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mapbox-polyline/1.2.1/polyline.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+  <header>
+    <h1>Pagina Admin - Rilievi e Perizie</h1>
+    <div>
+      <button id="logoutBtn" onclick="window.location.href='login.html'">Logout</button>
+    </div>
+  </header>
+
+  <section class="controls">
+    <label for="userFilter">Filtra per utente:</label>
+    <select id="userFilter">
+      <option value="all">Tutti</option>
+    </select>
+  </section>
+
+  <div id="mapContainer" class="map"></div>
+
+  <section class="info">
+    <h2>Dettagli perizia</h2>
+    <div id="dettagliPerizia">Clicca un segnaposto sulla mappa per vedere i dettagli.</div>
+    <div id="indirizzo"></div>
+    <div id="dataOra"></div>
+    <textarea id="descrizionePerizia"></textarea>
+    <div id="fotoContainer"></div>
+    <button id="btnSalvaModifiche"> Salva modifiche </button>
+  </section>
+  <section class="creaUtente">
+    <h2>Crea utente</h2>
+    <input type="text" id="nome" placeholder="nome">
+    <br><br>
+    <input type="text" id="username" placeholder="username">
+    <br><br>
+    <input type="text" id="email" placeholder="email">
+    <br><br>
+    <button id="btnCreaUtente"> Crea utente </button>
+  </section>
+</body>
+</html>

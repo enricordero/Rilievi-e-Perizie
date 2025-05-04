@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="login.css">
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Il tuo script -->
+    <script src="login.js" defer></script>
+    <script src="libreria.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+
+        <div class="input-group">
+            <label for="usr" class="label-icon">👤</label>
+            <input type="text" id="usr" placeholder="Username">
+        </div>
+
+        <div class="input-group">
+            <label for="pwd" class="label-icon">🔒</label>
+            <input type="password" id="pwd" placeholder="Password">
+        </div>
+
+        <button id="btnLogin">Login</button>
+
+        <div id="lblErrore" class="error-box">
+            <span>Credenziali non valide</span>
+            <button>&times;</button>
+        </div>
+    </div>
+</body>
+</html>
