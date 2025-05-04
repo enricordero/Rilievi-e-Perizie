@@ -53,12 +53,14 @@ app.use('/', (req, res, next) => {
 
 // 5. CORS
 const whitelist = [
-  'http://my-crud-server.herokuapp.com ', // porta 80 (default)
-  'https://my-crud-server.herokuapp.com ', // porta 443 (default)
+  'http://rilievi-e-perizie-un3o.onrender.com/',
+  'https://rilievi-e-perizie-un3o.onrender.com/',
   'http://localhost:3000',
   'https://localhost:3001',
-  'http://localhost:4200', // server angular
-  'https://cordovaapp' // porta 443 (default)
+  'http://localhost:4200',
+  'http://localhost:8100',
+  'https://cordovaapp'
+
 ];
 const corsOptions: CorsOptions = {
   origin: function (origin, callback) {
