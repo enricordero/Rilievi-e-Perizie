@@ -119,6 +119,42 @@ app.post('/api/login', async (req: Request, res: Response) => {
   }
 });
 
+app.post('/api/loginUtenti', async (req: Request, res: Response) => {
+  let collectionName = "Utenti";
+  let { username, password } = req.body;
+
+  const client = new MongoClient(connectionString);
+  try {
+    await client.connect();
+    const collection = client.db(dbName).collection(collectionName);
+    const utente = await collection.findOne({ username: username });
+
+    if (!utente) {
+      res.status(404).send("Utente non trovato");
+      return;
+    }
+    else {
+      if (utente.password !== password) {
+        res.status(401).send("Password errata");
+        return;
+      }
+      else {
+        if (utente.admin == true) {
+          res.status(403).send("Accesso riservato agli operatori");
+          return;
+        }
+      }
+    }
+    res.status(200).send({ message: "Login riuscito", utente: { username: utente.username, nome: utente.nome } });
+
+  } catch (err) {
+    console.error("Errore login:", err);
+    res.status(500).send({ error: "Errore durante il login" });
+  } finally {
+    await client.close();
+  }
+});
+
 
 app.get('/api/getOperatori', async (req: Request, res: Response) => {
   const collectionName = "Utenti";
