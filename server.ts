@@ -155,6 +155,39 @@ app.post('/api/loginUtenti', async (req: Request, res: Response) => {
   }
 });
 
+app.post('/api/cambiaPassword', async (req: Request, res: Response) => {
+  const collectionName = "Utenti";
+  const { username, newPassword } = req.body;
+
+  const client = new MongoClient(connectionString);
+  try {
+    await client.connect();
+    const collection = client.db(dbName).collection(collectionName);
+    const utente = await collection.findOne({ username: username });
+
+    if (!utente) {
+      res.status(404).send("Utente non trovato");
+      return;
+    }
+
+    const result = await collection.updateOne(
+      { username: username },
+      { $set: { password: newPassword } }
+    );
+
+    if (result.modifiedCount === 1) {
+      res.status(200).send({ message: "Password aggiornata con successo" });
+    } else {
+      res.status(500).send({ error: "Impossibile aggiornare la password" });
+    }
+
+  } catch (err) {
+    console.error("Errore durante il cambio password:", err);
+    res.status(500).send({ error: "Errore durante il cambio password" });
+  } finally {
+    await client.close();
+  }
+});
 
 app.get('/api/getOperatori', async (req: Request, res: Response) => {
   const collectionName = "Utenti";
