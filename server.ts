@@ -145,7 +145,7 @@ app.post('/api/loginUtenti', async (req: Request, res: Response) => {
         }
       }
     }
-    res.status(200).send({ message: "Login riuscito", utente: { username: utente.username, nome: utente.nome } });
+    res.status(200).send({ message: "Login riuscito", utente: { id:utente._id, username: utente.username, nome: utente.nome } });
 
   } catch (err) {
     console.error("Errore login:", err);
