@@ -53,8 +53,6 @@ app.use('/', (req, res, next) => {
 
 // 5. CORS
 const whitelist = [
-  'http://my-crud-server.herokuapp.com',
-  'https://my-crud-server.herokuapp.com',
   'http://localhost:3000',
   'https://localhost:3001',
   'http://localhost:4200',
@@ -145,7 +143,7 @@ app.post('/api/loginUtenti', async (req: Request, res: Response) => {
         }
       }
     }
-    res.status(200).send({ message: "Login riuscito", utente: { id:utente._id, username: utente.username, nome: utente.nome } });
+    res.status(200).send({ message: "Login riuscito", utente: { id: utente._id, username: utente.username, nome: utente.nome } });
 
   } catch (err) {
     console.error("Errore login:", err);
@@ -302,8 +300,37 @@ app.post('/api/creaUtente', async (req: Request, res: Response) => {
   }
 });
 
+app.post('/api/creaPerizia', async (req: Request, res: Response) => {
+  const collectionName = "Perizie";
+  const nuovaPerizia = req.body.perizia;
+
+  const client = new MongoClient(connectionString);
+  try {
+    await client.connect();
+    const collection = client.db(dbName).collection(collectionName);
+
+    const periziaDaInserire = {
+      idUtente: nuovaPerizia["idUtente"],
+      dataOra: nuovaPerizia["dataOra"],
+      coordinate: nuovaPerizia["coordinate"],
+      descrizione: nuovaPerizia["descrizione"],
+      fotografie: nuovaPerizia["fotografie"]
+    };
+
+    const result = await collection.insertOne(periziaDaInserire);
+
+    res.status(201).send({ message: "Perizia creata correttamente", insertedId: result.insertedId });
+  } catch (err) {
+    console.error("Errore durante la creazione della perizia:", err);
+    res.status(500).send({ error: "Errore durante la creazione della perizia" });
+  } finally {
+    await client.close();
+  }
+});
+
+
 app.post("/api/aggiornaPerizia", async (req, res) => {
-  let collectionName = "Perizie"; // o come si chiama la tua collection
+  let collectionName = "Perizie";
   let { idPerizia, descrizione, commentiFoto } = req.body;
 
   const client = new MongoClient(connectionString);
@@ -318,7 +345,6 @@ app.post("/api/aggiornaPerizia", async (req, res) => {
       return;
     }
 
-    // Aggiorna
     perizia.coordinate.descrizione = descrizione;
 
     if (perizia.fotografie && commentiFoto.length === perizia.fotografie.length) {
@@ -330,7 +356,6 @@ app.post("/api/aggiornaPerizia", async (req, res) => {
       return;
     }
 
-    // Salva nel db
     await collection.updateOne(
       { _id: idPerizia },
       { $set: { descrizione: descrizione, fotografie: perizia.fotografie } }
