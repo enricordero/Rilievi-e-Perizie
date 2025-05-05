@@ -232,7 +232,7 @@ app.get('/api/getPerizie', async (req: Request, res: Response) => {
 
 app.get('/api/getPeriziePerUtente', async (req: Request, res: Response) => {
   let collectionName = "Perizie";
-  let utente = req.query.Utente
+  let utente = req.query.utente
 
   const client = new MongoClient(connectionString);
   await client.connect();
