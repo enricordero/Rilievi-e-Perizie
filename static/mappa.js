@@ -26,32 +26,27 @@ const style = {
 }
 
 function popolaMappa(perizie) {
-  // Inizializza la mappa
-
   const mapOptions = {
-    container: "mapContainer", // container id
+    container: "mapContainer",
     style: style,
-    center: [LNGSEDECENTRALE, LATSEDECENTRALE], // starting position [lng, lat]
+    center: [LNGSEDECENTRALE, LATSEDECENTRALE], 
     zoom: 12
   }
   const map = new maplibregl.Map(mapOptions);
-  map.addControl(new maplibregl.NavigationControl()); // 'top-right'
+  map.addControl(new maplibregl.NavigationControl());
   const scaleOptions = { maxWidth: 80, unit: 'metric' }
   map.addControl(new maplibregl.ScaleControl(scaleOptions))
 
-  // Aggiungi il segnaposto per la sede centrale
   new maplibregl.Marker({ color: "red" })
     .setLngLat([LNGSEDECENTRALE, LATSEDECENTRALE])
     .setPopup(new maplibregl.Popup().setHTML("<h2>SEDE CENTRALE</h2>"))
     .addTo(map);
 
-  // Aggiungi i segnaposti per le perizie
   for (const perizia of perizie) {
     let marker = new maplibregl.Marker({ color: "#229" })
       .setLngLat([perizia.coordinate.lng, perizia.coordinate.lat])
       .addTo(map);
 
-    // Aggiungi un popup al segnaposto
     let popup = new maplibregl.Popup({ offset: 25 }).setHTML(`
       <h3>${perizia.descrizione}</h3>
       <button class="btnMarker" onclick="visualizzaDettagli('${perizia._id}')"> Visualizza dettagli </button>
@@ -61,14 +56,12 @@ function popolaMappa(perizie) {
     `);
     marker.setPopup(popup);
   }
-
-
 }
 
-// Funzione per visualizzare i dettagli della perizia
 async function visualizzaDettagli(periziaId) {
   const request = await inviaRichiesta("GET", `/api/getDettagliPerizia`, { periziaId });
   if (request) {
+    console.log(request)
     let perizia = request.data[0]
 
     const isoDate = perizia.dataOra;
@@ -105,7 +98,6 @@ async function visualizzaDettagli(periziaId) {
   }
 }
 
-// Funzione per ottenere l'indirizzo dalle coordinate
 function getIndirizzo(coordinate, callback) {
   let url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${coordinate.lat}&lon=${coordinate.lng}`;
   $.getJSON(url, function (data) {
@@ -147,8 +139,8 @@ async function getRoute(start, end) {
 
     return {
       coordinates: decodedRoute,
-      distance: route.summary.distance, // distanza in metri
-      duration: route.summary.duration  // durata in secondi
+      distance: route.summary.distance,
+      duration: route.summary.duration 
     };
   } else {
     throw new Error("Nessun percorso trovato");
@@ -179,14 +171,12 @@ async function getAddressFromCoordinates(lat, lng) {
 }
 
 async function vediPercorso(idPerizia, descrizionePerizia, latDest, lngDest, map, button) {
-  console.log(idPerizia)
 
   const popupElement = button.closest('.maplibregl-popup-content');
   if (popupElement) {
     popupElement.innerHTML = "<h3>Calcolo del percorso...</h3>";
   }
 
-  // Prima otteniamo gli indirizzi, in modo sincrono usando await
   const indirizzoSedeCentrale = await getAddressFromCoordinates(LATSEDECENTRALE, LNGSEDECENTRALE)
     .catch(error => { console.error(error); return null; });
   const indirizzoPerizia = await getAddressFromCoordinates(latDest, lngDest)
@@ -200,7 +190,6 @@ async function vediPercorso(idPerizia, descrizionePerizia, latDest, lngDest, map
     return;
   }
 
-  // Ora possiamo passare agli step successivi
   const originCoords = await getCoordinates(encodeURIComponent(indirizzoSedeCentrale))
     .catch(error => { console.error(error); return null; });
   const destinationCoords = await getCoordinates(encodeURIComponent(indirizzoPerizia))

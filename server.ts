@@ -232,7 +232,7 @@ app.get('/api/getPerizie', async (req: Request, res: Response) => {
 
 app.get('/api/getPeriziePerUtente', async (req: Request, res: Response) => {
   let collectionName = "Perizie";
-  let utente = req.query.utente
+  let utente = req.query.Utente
 
   const client = new MongoClient(connectionString);
   await client.connect();
@@ -254,13 +254,18 @@ app.get('/api/getPeriziePerUtente', async (req: Request, res: Response) => {
 app.get('/api/getDettagliPerizia', async (req: Request, res: Response) => {
   let collectionName = "Perizie";
   let idPerizia = req.query.periziaId
-
+  
   const client = new MongoClient(connectionString);
   await client.connect();
   const collection = client.db(dbName).collection(collectionName);
-
-  const request = collection.find({ "_id": idPerizia }).toArray();
-
+  let request
+  if(idPerizia!.toString().length > 6){
+    let id = new ObjectId(idPerizia?.toString())
+    request = collection.find({ "_id": id }).toArray();
+  }
+  else{
+    request = collection.find({ "_id": idPerizia }).toArray();
+  }
   request.catch((err) => {
     res.status(500).send(`Errore esecuzione query: ${err}`);
   });
