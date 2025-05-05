@@ -92,7 +92,7 @@ async function visualizzaDettagli(periziaId) {
     fotoContainer.empty();
     let i = 1
     for (const foto of perizia.fotografie) {
-      $("<img>").prop("src", foto.url).css({ "margin": "5px" }).appendTo(fotoContainer)
+      $("<img>").prop("src", "data:image/png;base64, " + foto.url).css({ "margin": "5px" }).appendTo(fotoContainer)
       $("<textarea>").addClass("commentoFoto").prop("id", `cF-${i++}`).text(foto.commento).appendTo(fotoContainer)
       $("<br>").appendTo(fotoContainer)
     }
