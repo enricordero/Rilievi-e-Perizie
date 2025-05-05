@@ -59,7 +59,9 @@ const whitelist = [
   'https://localhost:3001',
   'http://localhost:4200',
   'https://cordovaapp',
-  'https://rilievi-e-perizie-un3o.onrender.com'
+  'https://rilievi-e-perizie-un3o.onrender.com',
+  'http://localhost:8100',
+  'https://localhost:8100'
 ];
 
 const corsOptions: CorsOptions = {
