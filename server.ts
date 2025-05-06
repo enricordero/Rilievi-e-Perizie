@@ -53,6 +53,7 @@ app.use('/', (req, res, next) => {
 
 // 5. CORS
 const whitelist = [
+  'https://localhost',
   'http://localhost:3000',
   'https://localhost:3001',
   'http://localhost:4200',
