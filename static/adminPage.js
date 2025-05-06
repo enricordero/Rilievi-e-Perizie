@@ -102,8 +102,11 @@ $(document).ready(function () {
         }
 
         const request = inviaRichiesta("POST", "/api/aggiornaPerizia", modifiche)
-        if(request){
-            window.location.href = "adminPage.html"
+        if(request.status == 200){
+            Swal.fire({
+                title: "Modifiche salvate con successo!",
+                icon: "success"
+            })
         }
     })
 })
